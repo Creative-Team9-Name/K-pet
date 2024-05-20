@@ -40,12 +40,12 @@ class BT():
             print("Received: ", received_data)
 
             data_to_send = "Bye{}".format(count)
-            send_bytes = com.send(data_to_send.encode('utf-8'), timeout=100)
+            send_bytes = self.com.send(data_to_send.encode('utf-8'), timeout=100)
             count += 1
 
             print("Send: ", data_to_send)
 
-    def any():
+    def any(self): # what does this function do?   
         return self.com.any()
 
     def read(self, msg):
@@ -63,7 +63,7 @@ class Move(): # class to move the robot
         self.distance = DistanceSensor('B')
         self.motor.set_default_speed(50) # check if correct
     
-    def check_obstacle(self)->Bool: # Obstacle: True  No obstacle: False
+    def check_obstacle(self)->bool: # Obstacle: True  No obstacle: False
         obstacle_distance = self.distance.get_distance_cm()
         if obstacle_distance != None and obstacle_distance < 30:
             return True
