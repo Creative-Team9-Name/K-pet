@@ -29,7 +29,7 @@ class BT():
                 hub.status_light.off('green')
                 hub.status_light.on('red')
 
-        self.com.callback(self.connection_status())
+        self.com.callback(connection_status())
     
     def connect(self):
         count = 0
