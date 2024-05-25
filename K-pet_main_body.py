@@ -12,6 +12,11 @@ def init():
     cat_motor = Motor('A')
     goose_motor = Motor('B')
     duck_motor = Motor('C')
+    force_sensor = ForceSensor('D')
+    color_sensor = ColorSensor('E')
+    distance_sensor = DistanceSensor('F')
+    motion_sensor = MotionSensor('G')
+    motor_pair = MotorPair('A', 'B')
     # initialize remaining sensors
     # TODO: initialize MotorPair
 
