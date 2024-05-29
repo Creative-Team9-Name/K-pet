@@ -54,7 +54,10 @@ class BT():
         return self.com.any()
 
     def read(self, msg):
-        pass
+        if self.any():
+            received_bytes = self.com.recv(1024, timeout=100)
+            if received_bytes:
+                msg.append(received_bytes)
 
     def close_connection(self):
         self.com.close()
