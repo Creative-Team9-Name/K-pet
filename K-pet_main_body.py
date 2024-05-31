@@ -8,15 +8,19 @@ hub = PrimeHub()
 
 hub.light_matrix.show_image('HAPPY')
 
-animal = -1
+def init():
+    cat_motor = Motor('A')
+    goose_motor = Motor('B')
+    duck_motor = Motor('C')
+    force_sensor = ForceSensor('D')
+    color_sensor = ColorSensor('E')
+    distance_sensor = DistanceSensor('F')
+    motion_sensor = MotionSensor('G')
+    motor_pair = MotorPair('A', 'B')
+    # initialize remaining sensors
+    # TODO: initialize MotorPair
 
-
-# message setting:
-# 1. 2 byte for animal type
-# 2. 6 bytes for position
-
-class FoodDispenser():
-
+class BT():
     def __init__(self):
         self.cat_motor = Motor('A')
         self.duck_motor = Motor('C')
@@ -108,7 +112,7 @@ class Bluetooth():
         hub.status_light.off()
         # self.com.setinterrupt(-1) # TODO: functionality not clear
 
-        # self.com.callback() #self.connection_status()
+        # self.com.callback() #connection_status()
 
     def connect(self):
         count = 0
@@ -132,7 +136,10 @@ class Bluetooth():
         return self.com.any()
 
     def read(self, msg):
-        pass
+        if self.any():
+            received_bytes = self.com.recv(1024, timeout=100)
+            if received_bytes:
+                msg.append(received_bytes)
 
     def close_connection(self):
         self.com.close()
