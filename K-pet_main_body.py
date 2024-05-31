@@ -192,7 +192,19 @@ class Move(): # class to move the robot
         self.turn_right()
 
     def avoid_obstacle(): # future upgrade
-        pass
+        self.motor.stop()
+        self.turn_left()
+        self.motor.start()
+        time.sleep(1)  
+        if self.check_obstacle():
+            self.motor.stop()
+            self.turn_right()
+            self.motor.start()
+            time.sleep(1)  # Move forward a bit
+            if self.check_obstacle():
+                self.motor.stop()
+                self.turn_around()
+        self.motor.start()
 
 
 
