@@ -191,7 +191,7 @@ class Move(): # class to move the robot
         self.turn_right()
         self.turn_right()
 
-    def avoid_obstacle(): # future upgrade
+    def avoid_obstacle(self, original_direction): # future upgrade
         self.motor.stop()
         self.turn_left()
         self.motor.start()
@@ -200,18 +200,29 @@ class Move(): # class to move the robot
             self.motor.stop()
             self.turn_right()
             self.motor.start()
-            time.sleep(1)  # Move forward a bit
+            time.sleep(1)  
             if self.check_obstacle():
                 self.motor.stop()
                 self.turn_around()
         self.motor.start()
+        hub.motion_sensor.reset_yaw_angle()
+        while abs(hub.motion_sensor.get_yaw_angle() - original_direction) > 2:
+        current_yaw = hub.motion_sensor.get_yaw_angle()
+        if current_yaw < original_direction:
+            self.motor.start_tank(left_speed=50, right_speed=-50)
+        else:
+            self.motor.start_tank(left_speed=-50, right_speed=50)
+        time.sleep(0.1)
+        self.motor.stop()
         
     def move_to_animal(self, distance):
         self.motor.start()
         count = 0
+        hub.motion_sensor.reset_yaw_angle()
+        original_direction = hub.motion_sensor.get_yaw_angle()
         while count < distance:
             if self.check_obstacle():
-                self.avoid_obstacle()
+                self.avoid_obstacle((original_direction))
             else:
                 self.motor.start()
                 time.sleep(1)
