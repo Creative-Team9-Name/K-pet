@@ -205,6 +205,18 @@ class Move(): # class to move the robot
                 self.motor.stop()
                 self.turn_around()
         self.motor.start()
+        
+    def move_to_animal(self, distance):
+        self.motor.start()
+        count = 0
+        while count < distance:
+            if self.check_obstacle():
+                self.avoid_obstacle()
+            else:
+                self.motor.start()
+                time.sleep(1)
+                count += 1
+        self.motor.stop()
 
 
 
