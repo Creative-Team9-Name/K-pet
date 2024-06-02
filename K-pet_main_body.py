@@ -231,6 +231,7 @@ while True:
     if msg >= 0 and msg <3:
         if msg == 0:
             # reach animal first
+            # we need to change move_straight to move_to_animal if move_to_animal works
             movement.move_straight(10)
             food.serve_cat_food()
             print('serving cat food')
