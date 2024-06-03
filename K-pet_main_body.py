@@ -190,6 +190,16 @@ class Move(): # class to move the robot
     def turn_around(self):
         self.turn_right()
         self.turn_right()
+        
+    def realign_to_direction(self, original_direction):
+        while abs(hub.motion_sensor.get_yaw_angle() - original_direction) > 2:
+            current_yaw = hub.motion_sensor.get_yaw_angle()
+            if current_yaw < original_direction:
+                self.motor.start_tank(left_speed=50, right_speed=-50)
+            else:
+                self.motor.start_tank(left_speed=-50, right_speed=50)
+            time.sleep(0.1)
+        self.motor.stop()
 
     def avoid_obstacle(self, original_direction): # future upgrade
         self.motor.stop()
@@ -204,16 +214,24 @@ class Move(): # class to move the robot
             if self.check_obstacle():
                 self.motor.stop()
                 self.turn_around()
-        self.motor.start()
-        hub.motion_sensor.reset_yaw_angle()
-        while abs(hub.motion_sensor.get_yaw_angle() - original_direction) > 2:
-        current_yaw = hub.motion_sensor.get_yaw_angle()
-        if current_yaw < original_direction:
-            self.motor.start_tank(left_speed=50, right_speed=-50)
-        else:
-            self.motor.start_tank(left_speed=-50, right_speed=50)
-        time.sleep(0.1)
-        self.motor.stop()
+                self.motor.start()
+                time.sleep(1)
+                if self.check_obstacle():
+                    self.motor.stop()
+                    self.turn_right()
+                    self.motor.start()
+                    time.sleep(1)
+                    if self.check_obstacle():
+                        self.motor.stop()
+                        self.turn_around()
+                        self.motor.start()
+                        time.sleep(1)
+                        if self.check_obstacle():
+                            self.motor.stop()
+                            self.turn_left()
+                            self.motor.start()
+                            time.sleep(1)
+        self.realign_to_direction(original_direction)
         
     def move_to_animal(self, distance):
         self.motor.start()
