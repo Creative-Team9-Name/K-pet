@@ -114,7 +114,7 @@ class Move(): # class to move the robot
         count = 0
         while not(self.check_obstacle()) and count < distance:
             count += 1
-            time.sleep(1)
+            time.sleep(0.3)
         self.motor.stop()
 
 
@@ -201,24 +201,23 @@ bt = Bluetooth()
 food = FoodDispenser()
 movement = Move()
 
-hub.left_button.wait_until_pressed()
 hub.speaker.beep(seconds=1)
 while True:
     msg = bt.connect()
     if msg >= 0 and msg <3:
         if msg == 0:
             # reach animal first
-            # movement.move_to_animal(10)
+            movement.move_straight(10)
             food.serve_cat_food()
             print('serving cat food')
         elif msg == 1:
             # reach animal first
-            # movement.move_to_animal(10)
+            movement.move_straight(10)
             food.serve_duck_food()
             print('serving duck food')
         elif msg == 2:
             # reach animal first
-            # movement.move_to_animal(10)
+            movement.move_straight(10)
             food.serve_goose_food()
             print('serving goose food')
         time.sleep(3)
