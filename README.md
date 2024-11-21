@@ -1,4 +1,4 @@
-#K-Pet: Animal Feeder Robot
+*Kpet: Animal Feeder Robot*
 Kpet is an intelligent animal feeding robot designed to provide food for geese, ducks, and cats. The robot uses the YOLO neural network for real-time object detection, allowing it to accurately recognize and classify different animals before dispensing the appropriate amount of food.
 
 Features:
